@@ -27,11 +27,11 @@ async function main() {
   app.use(bodyParser.json());
   app.use(session({ secret: COOKIE_SECRET || "secret" }));
 
-  app.listen(3000, () => console.log("listening on http://127.0.0.1:3000"));
+  app.listen(3000,"0.0.0.0", () => console.log("listening on http://0.0.0.0:3000"));
 
   app.use((req, res, next) => {
     if (req.headers.host.indexOf("localhost:3000") !== -1) {
-      res.redirect("http://127.0.0.1:3000");
+      res.redirect("http://0.0.0.0:3000");
       return;
     }
     next();
