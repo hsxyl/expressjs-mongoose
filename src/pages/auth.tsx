@@ -6,6 +6,8 @@ import getConfig from "../near/config";
 
 const PENDING_ACCESS_KEY_PREFIX = 'pending_key';
 
+completeSignInWithAccessKey()
+
 export default function Auth() {
 
 	let [accounts, setAccounts] = useState<string[]>([]);
@@ -32,7 +34,7 @@ export default function Auth() {
 				}
 			</div>
 
-			<button onClick={e => wallet.requestSignIn(config.contractId)}>
+			<button onClick={e => importAccount()}>
 				import
 			</button>
 
