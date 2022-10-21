@@ -1,4 +1,4 @@
-export default function getConfig(env: string = process.env.NEAR_ENV!) {
+export default function getConfig(env: string = "testnet") {
 	switch (env) {
 	  case "production":
 	  case "mainnet":
@@ -9,7 +9,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 		  helperUrl: "https://helper.mainnet.near.org",
 		  explorerUrl: "https://explorer.mainnet.near.org",
 		  indexerUrl: "https://indexer.ref-finance.net",
-		  contractId: "",
+		  contractId: "a.testnet",
 		  authUrl: "http://127.0.0.1:3000"		  
 		};
 	  case "development":
@@ -21,8 +21,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 		  walletUrl: "https://wallet.testnet.near.org",
 		  helperUrl: "https://helper.testnet.near.org",
 		  explorerUrl: "https://explorer.testnet.near.org",
-		  indexerUrl: "https://testnet-indexer.ref-finance.com",
-		  contractId: "",
+		  contractId: "a.testnet",
 		  authUrl: "http://127.0.0.1:3000"
 		};
 	  default:
@@ -34,7 +33,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 			helperUrl: "https://helper.testnet.near.org",
 			explorerUrl: "https://explorer.testnet.near.org",
 			indexerUrl: "https://testnet-indexer.ref-finance.com",
-			contractId: "",
+			contractId: "a.testnet",
 			authUrl: "http://127.0.0.1:3000"
 		};
 	}

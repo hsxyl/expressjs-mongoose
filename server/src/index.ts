@@ -27,11 +27,11 @@ async function main() {
   app.use(bodyParser.json());
   app.use(session({ secret: COOKIE_SECRET || "secret" }));
 
-  app.listen(3000,"0.0.0.0", () => console.log("listening on http://0.0.0.0:3000"));
+  app.listen(3000,"localhost", () => console.log("listening on http://localhost:3000"));
 
   app.use((req, res, next) => {
     if (req.headers.host.indexOf("localhost:3000") !== -1) {
-      res.redirect("http://0.0.0.0:3000");
+      res.redirect("http://127.0.0.1:3000");
       return;
     }
     next();
@@ -41,7 +41,7 @@ async function main() {
     res.send("hello");
   });
 
-  app.get("/oauth/authorize", authorize)
+  // app.get("/oauth/authorize", authorize)
   app.get("/oauth/token", oauth_token)
 
   app.post("/api/auth", near_auth);
@@ -61,6 +61,7 @@ async function main() {
 }
 
 export async function near_auth(req: any, res: any) {
+  console.log("fuction near_auth")
 
   try {
 

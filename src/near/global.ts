@@ -1,6 +1,6 @@
 import { keyStores, Near, WalletConnection } from "near-api-js";
+import { completeSignInWithAccessKey } from "../pages/auth";
 import getConfig from "./config";
-import { MyNearWallet } from "./mynearwallet";
 
 export const config = getConfig();
 export const nearKeyStore = new keyStores.BrowserLocalStorageKeyStore();
@@ -12,7 +12,7 @@ export const near = new Near({
 });
 
 
-export const wallet = new MyNearWallet(
-	near,
-	getConfig().contractId
-  );
+// export const wallet = new WalletConnection(
+// 	near,
+// 	getConfig().contractId
+//   );
