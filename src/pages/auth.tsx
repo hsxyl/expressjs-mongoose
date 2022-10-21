@@ -68,19 +68,7 @@ async function auth(accountId: string) {
 		console.log("signature", signature.signature)
 		// console.log("signature, join", signature.signature.join(","))
 
-		// axios.post(`${config.authUrl}/api/auth`, {
-		// 	accountId,
-		// 	signature: signature_string,
-		// 	msg: accountId,
-		// 	publicKey: signature.publicKey.toString()
-		// }).then(res => {
-		// 	console.log("res.data", res.data);
-		// 	if (!res.data.auth_result) {
-		// 		throw res.data.reason
-		// 	}
-		// }).catch((err)=>{})
-
-		let res = await axios.post(`${config.authUrl}/api/auth`, {
+		let res = await axios.post(`${window.location.origin}/api/auth`, {
 			accountId,
 			signature: signature_string,
 			msg: accountId,
@@ -92,9 +80,8 @@ async function auth(accountId: string) {
 			throw res.data.reason
 		}
 
-		window.location.href = `${params.redirect_uri}?code=${params.state}&state=${params.state}`
-
-		
+		window.location.href = decodeURIComponent(`${params.redirect_uri}?code=${params.state}&state=${params.state}`)
+		// window.location.href = `${params.redirect_uri}?code=${params.state}&state=${params.state}`
 	} catch (err) {
 		console.log("err", err)
 		alert(err)
@@ -112,7 +99,8 @@ async function importAccount() {
 	newUrl.searchParams.set('contract_id', config.contractId);
 	const accessKey = utils.KeyPair.fromRandom('ed25519');
 	newUrl.searchParams.set('public_key', accessKey.getPublicKey().toString());
-	await nearKeyStore.setKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + accessKey.getPublicKey(), accessKey);
+	// await nearKeyStore.setKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + accessKey.getPublicKey(), accessKey);
+	localStorage.setItem(PENDING_ACCESS_KEY_PREFIX+':'+accessKey.getPublicKey().toString(), accessKey.toString())
 
 	window.location.assign(newUrl.toString());
 }
@@ -149,13 +137,16 @@ export async function completeSignInWithAccessKey() {
 }
 
 export async function moveKeyFromTempToPermanent(accountId: string, publicKey: string): Promise<void> {
-	const keyPair = await nearKeyStore.getKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + publicKey);
-	await nearKeyStore.setKey(config.networkId, accountId, keyPair);
-	console.log("hi")
-	console.log(config.networkId, accountId, keyPair);
-
-	await nearKeyStore.setKey(config.networkId, accountId, keyPair);
-	await nearKeyStore.removeKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + publicKey);
+	// let networkId = "testnet"
+	// let keyPair = await(new keyStores.BrowserLocalStorageKeyStore().getKey(networkId, PENDING_ACCESS_KEY_PREFIX+publicKey))
+	// const keyPair = await nearKeyStore.getKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + publicKey);
+	// await nearKeyStore.setKey(config.networkId, accountId, keyPair);
+	// console.log("hi")
+	// console.log(config.networkId, accountId, keyPair);
+	let accesskey = localStorage.getItem(PENDING_ACCESS_KEY_PREFIX+':'+publicKey)!
+	localStorage.setItem(`near-api-js:keystore:${accountId}:testnet`, accesskey);
+	// await nearKeyStore.setKey(config.networkId, accountId, keyPair);
+	// await nearKeyStore.removeKey(config.networkId, PENDING_ACCESS_KEY_PREFIX + publicKey);
 }
 
 export function getUrlParams(url: string) {
