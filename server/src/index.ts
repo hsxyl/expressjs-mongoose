@@ -30,7 +30,7 @@ async function main() {
   app.listen(3000,"0.0.0.0", () => console.log("listening on http://0.0.0.0:3000"));
 
   app.use((req, res, next) => {
-    if (req.headers.host.indexOf("localhost:3000") !== -1) {
+    if (req.headers.host.indexOf("3000") !== -1) {
       res.redirect("http://0.0.0.0:3000");
       return;
     }
@@ -82,14 +82,20 @@ export async function near_auth(req: any, res: any) {
 
     assert(publickKey.verify(new TextEncoder().encode(accountId + state), signature), "Failed to pass publick verify!")
 
+    let redirect_uri = req.body.redirect_uri
+    assert(state!==undefined, "Failed to get redirect_uri in request body!")
+
     auth_map.set(req.body.state, req.body.accountId)
 
     // let params = getUrlParams(req.url)
     // assert(params.redirect_uri!==undefined, "The url ")
 
-    res.json({
-      auth_result: true,
-    })
+    // res.json({
+    //   auth_result: true,
+    // })
+
+    res.redirect(decodeURIComponent(`${redirect_uri}?code=${state}&state=${state}`))
+
   } catch (e) {
     res.json({
       auth_result: false,

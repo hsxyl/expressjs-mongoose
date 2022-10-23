@@ -69,6 +69,7 @@ async function auth(accountId: string) {
 		// console.log("signature, join", signature.signature.join(","))
 
 		let res = await axios.post(`${window.location.origin}/api/auth`, {
+			redirect_uri: params.redirect_uri,
 			accountId,
 			signature: signature_string,
 			msg: accountId,

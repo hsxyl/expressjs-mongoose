@@ -10,7 +10,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 		  explorerUrl: "https://explorer.mainnet.near.org",
 		  indexerUrl: "https://indexer.ref-finance.net",
 		  contractId: "",
-		  authUrl: "http://127.0.0.1:3000"		  
+		  authUrl: "http://127.0.0.1:3000"
 		};
 	  case "development":
 	  case "testnet":
@@ -22,7 +22,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 		  helperUrl: "https://helper.testnet.near.org",
 		  explorerUrl: "https://explorer.testnet.near.org",
 		  indexerUrl: "https://testnet-indexer.ref-finance.com",
-		  contractId: "",
+		  contractId: "oauth.testnet",
 		  authUrl: "http://127.0.0.1:3000"
 		};
 	  default:
@@ -34,7 +34,7 @@ export default function getConfig(env: string = process.env.NEAR_ENV!) {
 			helperUrl: "https://helper.testnet.near.org",
 			explorerUrl: "https://explorer.testnet.near.org",
 			indexerUrl: "https://testnet-indexer.ref-finance.com",
-			contractId: "",
+			contractId: "oauth.testnet",
 			authUrl: "http://127.0.0.1:3000"
 		};
 	}
